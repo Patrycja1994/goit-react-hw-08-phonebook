@@ -1,58 +1,58 @@
 import { useEffect, lazy } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { Layout } from 'components/Layout';
 import { PrivateRoute } from 'components/PrivateRoute';
 import { RestrictedRoute } from 'components/RestrictRoute';
-import { getCurrentUser } from 'redux/auth/operations';
+import { refreshUser } from 'redux/auth/authOperations';
 import { useAuth } from 'hooks';
-import { Layout } from 'components/Layout';
 
 const Home = lazy(() => import('pages/Home/Home'));
-const RegisterPage = lazy(() => import('pages/Register/Register'));
-const Login = lazy(() => import('pages/LogIn/LogIn'));
-const ContactsPage = lazy(() => import('pages/Contacts/Contacts'));
+const Register = lazy(() => import('pages/Register/Register'));
+const Login = lazy(() => import('pages/Login/Login'));
+const Contacts = lazy(() => import('pages/Contacts/Contacts'));
 
 export const App = () => {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(getCurrentUser());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return isRefreshing ? (
-    <b>Refreshing user...</b>
+    <b> Refreshing user...</b>
   ) : (
     <Routes>
       <Route path="/goit-react-hw-08-phonebook" element={<Layout />}>
-        <Route index element={<Home />}></Route>
+        <Route index element={<Home />} />
         <Route
           path="/goit-react-hw-08-phonebook/register"
           element={
             <RestrictedRoute
-              redirectTo="/goit-react-hw-08-phonebook/contacts"
-              component={<RegisterPage />}
+              redirectTo="/goit-react-hw-08-phonebook/phonebook"
+              component={<Register />}
             />
           }
-        ></Route>
+        />
         <Route
           path="/goit-react-hw-08-phonebook/login"
           element={
             <RestrictedRoute
-              redirectTo="/goit-react-hw-08-phonebook/contacts"
+              redirectTo="/goit-react-hw-08-phonebook/phonebook"
               component={<Login />}
             />
           }
-        ></Route>
+        />
         <Route
-          path="/goit-react-hw-08-phonebook/contacts"
+          path="/goit-react-hw-08-phonebook/phonebook"
           element={
             <PrivateRoute
               redirectTo="/goit-react-hw-08-phonebook/login"
-              component={<ContactsPage />}
+              component={<Contacts />}
             />
           }
-        ></Route>
+        />
       </Route>
     </Routes>
   );

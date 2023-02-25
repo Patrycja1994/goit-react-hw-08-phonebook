@@ -1,66 +1,60 @@
-import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/contacts/selectors';
-import { addNewContact } from 'redux/contacts/operations';
-import style from './ContactsForm.module.css';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import { selectContacts } from 'redux/contacts/contactsSelectors';
+import { addContacts } from 'redux/contacts/contactsOperation';
+import css from './ContactsForm.module.css';
 
-const ContactForm = () => {
-  const contacts = useSelector(getContacts);
+export const TaskEditor = () => {
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
-  const addContact = e => {
+  const onFormSubmit = e => {
     e.preventDefault();
-    let nameOntheList = false;
-    const form = e.target;
-    const name = e.target.name.value;
-    const number = e.target.number.value;
-    const toLowerCase = name.toLowerCase();
-
-    const newContact = {
+    const form = e.currentTarget;
+    const name = form.elements.name;
+    const number = form.elements.number;
+    if (
+      contacts.items.find(
+        contact =>
+          contact.name === name.value && contact.number === number.value
+      )
+    ) {
+      alert(`${name.value} is already in contacts`);
+      return;
+    }
+    const contact = {
+      name: name.value,
+      number: number.value,
       id: nanoid(),
-      name: name,
-      number: number,
     };
-
-    contacts.forEach(({ name }) => {
-      if (name.toLowerCase() === toLowerCase) {
-        alert(`${name} is already in contacts`);
-        nameOntheList = true;
-        form.reset();
-      }
-    });
-
-    if (nameOntheList) return;
-
-    dispatch(addNewContact(newContact));
+    dispatch(addContacts(contact));
     form.reset();
   };
+
   return (
-    <form className={style.formSubmit} onSubmit={addContact}>
-      <label className={style.formSubmit__name}>
-        Name
+    <>
+      <form className={css.form} onSubmit={onFormSubmit}>
+        <label>Name</label>
         <input
-          autoComplete="off"
+          className={css.name}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
-      </label>
-      <label className={style.formSubmit__number}>
-        Number
+        <label>Number</label>
         <input
-          autoComplete="off"
+          className={css.number}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
-      </label>
-      <button className={style.formSubmit__button} type="submit">Add contact</button>
-    </form>
+        <button className={css.button}>Add contact</button>
+      </form>
+    </>
   );
 };
-export default ContactForm;
