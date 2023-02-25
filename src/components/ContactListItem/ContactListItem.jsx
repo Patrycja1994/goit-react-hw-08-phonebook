@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { removeContact } from 'redux/contacts/contactsOperation';
-import css from './ContactListItems.module.css';
+import css from './ContactListItem.module.css';
 
 export const ContactListItem = ({ contact }) => {
   const { name, id, number } = contact;
@@ -21,9 +21,9 @@ export const ContactListItem = ({ contact }) => {
           type="button"
           onClick={() => onContactDelete(id)}
         >
-          DELETE
+          Delete
         </button>
-      </li>{' '}
+      </li>
     </>
   );
 };

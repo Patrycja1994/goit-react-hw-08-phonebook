@@ -1,0 +1,14 @@
+.button{
+    font-size: 15px;
+    font-weight: normal;
+    background-color: #282828;
+    color: aliceblue;
+    width: 90px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.button:hover,
+.button:focus {
+    background-color: #54003c;
+}

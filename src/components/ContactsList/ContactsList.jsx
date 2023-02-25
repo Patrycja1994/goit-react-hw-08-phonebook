@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { ContactListItem } from 'components/ContactListItem/ContactListItems';
+import { ContactListItem } from 'components/ContactListItem/ContactListItem';
 import { selectContacts, selectFilter } from 'redux/contacts/contactsSelectors';
 import css from './ContactsList.module.css';
 
@@ -11,11 +11,11 @@ export const ContactsList = () => {
   );
 
   return (
-    <ol className={css.list}>
-      <h5>Contacts</h5>
+    <ul className={css.list}>
+      <h5 className={css.contactsHeader}>PHONEBOOK</h5>
       {contactsFilter.map(({ id, name, number }) => (
         <ContactListItem key={id} contact={{ id, name, number }} />
       ))}
-    </ol>
+    </ul>
   );
 };

@@ -1,8 +1,24 @@
 .wrapper {
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 20px;
 }
 
 .username {
-    font-weight: 700;
-    font-size: 22px;
+  font-weight: 700;
+}
+
+.buttonWrapper{
+  font-size: 15px;
+  font-weight: normal;
+  background-color: #282828;
+  color: aliceblue;
+  width: 90px;
+  cursor: pointer;
+}
+
+.buttonWrapper:hover,
+.buttonWrapper:focus {
+  background-color: #54003c;
 }

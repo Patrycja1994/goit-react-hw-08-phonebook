@@ -3,11 +3,11 @@ import { LoginForm } from 'components/LoginForm/LoginForm';
 
 export default function Login() {
   return (
-    <div>
+    <>
       <Helmet>
-        <title>Login</title>
+        <h2>Login</h2>
       </Helmet>
       <LoginForm />
-    </div>
+    </>
   );
 }

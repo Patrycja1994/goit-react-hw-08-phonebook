@@ -1,10 +1,10 @@
 import { useEffect, lazy } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from 'components/Layout';
-import { PrivateRoute } from 'components/PrivateRoute';
-import { RestrictedRoute } from 'components/RestrictRoute';
-import { refreshUser } from 'redux/auth/authOperations';
+import { Layout } from './Layout';
+import { PrivateRoute } from './Routes/PrivateRoute';
+import { RestrictedRoute } from './Routes/RestrictedRoute';
+import { refreshUser } from 'redux/auth/authOperation';
 import { useAuth } from 'hooks';
 
 const Home = lazy(() => import('../pages/Home'));
@@ -30,7 +30,7 @@ export const App = () => {
           path="/goit-react-hw-08-phonebook/register"
           element={
             <RestrictedRoute
-              redirectTo="/goit-react-hw-08-phonebook/phonebook"
+              redirectTo="/goit-react-hw-08-phonebook/contacts"
               component={<Register />}
             />
           }
@@ -39,13 +39,13 @@ export const App = () => {
           path="/goit-react-hw-08-phonebook/login"
           element={
             <RestrictedRoute
-              redirectTo="/goit-react-hw-08-phonebook/phonebook"
+              redirectTo="/goit-react-hw-08-phonebook/contacts"
               component={<Login />}
             />
           }
         />
         <Route
-          path="/goit-react-hw-08-phonebook/phonebook"
+          path="/goit-react-hw-08-phonebook/contacts"
           element={
             <PrivateRoute
               redirectTo="/goit-react-hw-08-phonebook/login"
